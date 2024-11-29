@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Notation Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #5fbad4;
+            color: #333;
+            text-align: center;
+        }
+
+        .quiz-container {
+            width: 90%;
+            margin: auto;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #0062ff;
+        }
+
+        .question-image {
+            width: 100%;
+            max-width: 480px;
+            height: auto;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .question {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+        }
+
+        .options button {
+            padding: 20px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            text-align: left;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .selected {
+            background-color: lightblue;
+        }
+
+        .correct {
+            background-color: #008001;
+            color: white;
+        }
+
+        .incorrect {
+            background-color: #ff4a4a;
+            color: white;
+        }
+
+        .explanation {
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            background-color: #0062ff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn.submitted {
+            background-color: #99b3ff; /* Lighter color after submission */
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2>Question 02</h2>
+
+    <img src="https://imgur.com/8vtNxgx.png" alt="Chess Move Notation Image" class="question-image">
+
+    <div class="question">ඉහත සුදු නයිට්ගේ ඇදීම සටහන් කරනු ලබන්නේ,</div>
+
+    <div class="options">
+        <button onclick="selectOption(0)">01. <b>NF3</b></button>
+        <button onclick="selectOption(1)">02. <b>Kf3</b></button>
+        <button onclick="selectOption(2)">03. <b>nf3</b></button>
+        <button onclick="selectOption(3)">04. <b>Nf3</b></button>
+    </div>
+
+    <button class="submit-btn" onclick="submitAnswer()">Submit Answer</button>
+
+    <div id="explanation" class="explanation"></div>
+    <img id="explanationImage" src="" alt="" style="display: none; width: 100%; margin-top: 10px; border-radius: 8px;" />
+</div>
+
+<script>
+    const correctAnswer = 3;
+    const explanations = [
+        {
+            text: "<span style='color: #ed0708;'><b>Incorrect.</b></span> ඉත්තන් අදින ලද කොටුව සටහන් කරන්නේ සිම්පල් ඉංග්‍රීසි (e) අකුරෙනි.",
+            image: ".png"
+        },
+        {
+            text: "<span style='color: #ed0708;'><b>Incorrect.</b></span> නයිට් ඉත්තාගේ සංකේත අක්ෂරය 'N' වේ.",
+            image: ".png"
+        },
+        {
+            text: "<span style='color: #ed0708;'><b>Incorrect.</b></span> චෙස් ඉත්තන් සටහන් කරනු ලබන්නේ කැපිටල් ඉංග්‍රීසි (N) අකුරෙනි.",
+            image: ".png"
+        },
+        {
+            text: "<span style='color: #008001;'><b>Correct!</b></span> මෙය නයිට් ඉත්තෙකුගේ ඇදීමක් සටහන් කරන නිවරැදි ආකාරයයි.",
+            image: ".png"
+        }
+    ];
+
+    let selectedOption = -1;
+
+    function selectOption(index) {
+        const options = document.querySelectorAll(".options button");
+        options.forEach(button => button.classList.remove("selected", "correct", "incorrect"));
+        options[index].classList.add("selected");
+        selectedOption = index;
+    }
+
+    function submitAnswer() {
+        if (selectedOption === -1) {
+            alert("Please select an option before submitting.");
+            return;
+        }
+
+        const options = document.querySelectorAll(".options button");
+        const explanationDiv = document.getElementById("explanation");
+        const explanationImage = document.getElementById("explanationImage");
+        const submitButton = document.querySelector(".submit-btn");
+
+        options.forEach((button, index) => {
+            if (index === selectedOption) {
+                button.classList.add(selectedOption === correctAnswer ? "correct" : "incorrect");
+            } else if (index === correctAnswer) {
+                button.classList.add("correct");
+            }
+        });
+
+        explanationDiv.innerHTML = explanations[selectedOption].text;
+        explanationImage.src = explanations[selectedOption].image;
+        explanationImage.style.display = "block";
+
+        submitButton.classList.add("submitted");
+    }
+</script>
+
+</body>
+</html>
